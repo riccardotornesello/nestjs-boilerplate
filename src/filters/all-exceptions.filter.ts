@@ -26,6 +26,9 @@ export class AllExceptionsFilter implements ExceptionFilter {
       path: httpAdapter.getRequestUrl(ctx.getRequest()),
     };
 
+    // TODO: remove in production
+    console.log('exception', exception);
+
     httpAdapter.reply(ctx.getResponse(), responseBody, httpStatus);
   }
 }

@@ -1,24 +1,22 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import type { FindOptionsWhere, DeepPartial } from 'typeorm';
 import { Repository } from 'typeorm';
+import { UserRegisterDto } from '../auth/dto/user-register.dto';
 import { User } from './entities/user.entity';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
-    private usersRepository: Repository<User>,
+    private readonly userRepository: Repository<User>,
   ) {}
 
-  findAll(): Promise<User[]> {
-    return this.usersRepository.find();
+  findOne(findData: FindOptionsWhere<User>): Promise<User | null> {
+    return this.userRepository.findOneBy(findData);
   }
 
-  findOne(id: number): Promise<User> {
-    return this.usersRepository.findOneBy({ id });
-  }
-
-  async remove(id: string): Promise<void> {
-    await this.usersRepository.delete(id);
+  createOne(userData: DeepPartial<User>): Promise<User> {
+    return this.userRepository.save(userData);
   }
 }

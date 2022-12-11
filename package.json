@@ -24,7 +24,7 @@
     "migration:create": "pnpm run typeorm migration:create -d ormconfig",
     "migration:revert": "pnpm run typeorm migration:revert -d ormconfig",
     "migration:run": "pnpm run typeorm migration:run -d ormconfig",
-    "schema:drop": "pnpm run typeorm schema:drop"
+    "schema:drop": "pnpm run typeorm schema:drop -d ormconfig"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
@@ -32,6 +32,9 @@
     "@nestjs/core": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/typeorm": "^9.0.1",
+    "bcrypt": "^5.1.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.0",
     "dotenv": "^16.0.3",
     "pg": "^8.8.0",
     "reflect-metadata": "^0.1.13",
@@ -43,6 +46,7 @@
     "@nestjs/cli": "^9.0.0",
     "@nestjs/schematics": "^9.0.0",
     "@nestjs/testing": "^9.0.0",
+    "@types/bcrypt": "^5.0.0",
     "@types/express": "^4.17.13",
     "@types/jest": "28.1.8",
     "@types/node": "^16.0.0",

@@ -1,6 +1,5 @@
 export interface DatabaseConfig {
   type: string;
-  name: string;
   host: string;
   port: number;
   username: string;
@@ -8,7 +7,6 @@ export interface DatabaseConfig {
   database: string;
   entities: string[];
   migrations: string[];
-  migrationsRun: boolean;
   keepConnectionAlive: boolean;
 }
 
@@ -19,7 +17,6 @@ export interface Config {
 export const configuration = (): Config => ({
   database: {
     type: 'postgres',
-    name: 'default',
     host: process.env.DATABASE_HOST || '127.0.0.1',
     port: parseInt(process.env.DATABASE_PORT, 10) || 5432,
     username: process.env.DATABASE_USERNAME || 'postgres',
@@ -30,7 +27,6 @@ export const configuration = (): Config => ({
       __dirname + '/../modules/**/*.view-entity{.ts,.js}',
     ],
     migrations: [__dirname + '/../database/migrations/*{.ts,.js}'],
-    migrationsRun: true,
     keepConnectionAlive: true,
   },
 });

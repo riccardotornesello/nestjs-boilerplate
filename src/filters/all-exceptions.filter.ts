@@ -2,7 +2,6 @@ import {
   ExceptionFilter,
   Catch,
   ArgumentsHost,
-  HttpException,
   HttpStatus,
 } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
@@ -16,17 +15,13 @@ export class AllExceptionsFilter implements ExceptionFilter {
 
     const ctx = host.switchToHttp();
 
-    const httpStatus =
-      exception instanceof HttpException
-        ? exception.getStatus()
-        : HttpStatus.INTERNAL_SERVER_ERROR;
-
+    const httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
     const responseBody = {
       statusCode: httpStatus,
       path: httpAdapter.getRequestUrl(ctx.getRequest()),
     };
 
-    // TODO: remove in production
+    // TODO: proper logging
     console.log('exception', exception);
 
     httpAdapter.reply(ctx.getResponse(), responseBody, httpStatus);

@@ -16,6 +16,18 @@ export class UserService {
     return this.userRepository.findOneBy(findData);
   }
 
+  getByUsername(username: string): Promise<User | null> {
+    return this.findOne({
+      username,
+    });
+  }
+
+  getByEmail(email: string): Promise<User | null> {
+    return this.findOne({
+      email,
+    });
+  }
+
   createOne(userData: DeepPartial<User>): Promise<User> {
     return this.userRepository.save(userData);
   }

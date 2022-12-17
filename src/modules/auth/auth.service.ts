@@ -58,10 +58,13 @@ export class AuthService {
   }
 
   async registerUser(userRegisterDto: UserRegisterDto): Promise<User> {
-    const userData = {...userRegisterDto};
+    const userData = { ...userRegisterDto };
     const userPassword = userData.password;
-    delete userData.password
+    delete userData.password;
 
-    return this.userService.createOne({...userData, passwordHash: generateBcrypt(userPassword)});
+    return this.userService.createOne({
+      ...userData,
+      passwordHash: generateBcrypt(userPassword),
+    });
   }
 }

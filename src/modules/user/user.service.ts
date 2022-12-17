@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import type { FindOptionsWhere, DeepPartial } from 'typeorm';
 import { Repository } from 'typeorm';
-import { UserRegisterDto } from '../auth/dto/user-register.dto';
 import { User } from './entities/user.entity';
 
 @Injectable()

@@ -4,6 +4,7 @@ import {
   ValidationError,
   UnprocessableEntityException,
 } from '@nestjs/common';
+import { useContainer } from 'class-validator';
 import { AppModule } from './app.module';
 import {
   AllExceptionsFilter,
@@ -13,6 +14,8 @@ import {
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
   const httpAdapter = app.get(HttpAdapterHost);
 

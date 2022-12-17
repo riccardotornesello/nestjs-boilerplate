@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { configuration, Config } from './config';
 import { UserModule, AuthModule } from './modules';
+import { UniqueRule } from './validators/unique';
 
 @Module({
   imports: [
@@ -22,6 +23,6 @@ import { UserModule, AuthModule } from './modules';
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, UniqueRule],
 })
 export class AppModule {}

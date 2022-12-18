@@ -5,7 +5,7 @@
 - Multiple authentication methods
 - Swagger
 - Cache
-- NodeJS
+- Logging
 - Docker (with multi-stage build in production)
 - Serialization
 - Websockets

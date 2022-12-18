@@ -2,7 +2,6 @@
 
 ## Missing features
 
-- Authentication guards and permissions check
 - Multiple authentication methods
 - Swagger
 - Cache

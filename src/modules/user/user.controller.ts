@@ -1,12 +1,13 @@
-import { Controller, UseGuards, Get, Request } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
+import { Controller, Get, Request } from '@nestjs/common';
+import { Auth } from 'src/decorators/auth.decorator';
 import { UserService } from './user.service';
+import { UserRole } from '../../constants';
 
 @Controller('users')
 export class UserController {
   constructor(private userService: UserService) {}
 
-  @UseGuards(AuthGuard('bearer'))
+  @Auth({ roles: [UserRole.USER] })
   @Get('@me')
   async login(@Request() req) {
     return req.user;

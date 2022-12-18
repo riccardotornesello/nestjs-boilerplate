@@ -10,9 +10,15 @@ import {
   generateSha,
   generateBcrypt,
 } from '../../common/crypto/utils';
-import { UserNotFoundException } from '../../exceptions';
+import {
+  UserNotFoundException,
+  InvalidTokenException,
+  TokenExpiredException,
+} from '../../exceptions';
 import { AuthToken } from './entities/auth-token.entity';
 import { UserRegisterDto } from './dto/user-register.dto';
+import { ConfigService } from '@nestjs/config';
+import * as moment from 'moment';
 
 @Injectable()
 export class AuthService {
@@ -20,6 +26,7 @@ export class AuthService {
     @InjectRepository(AuthToken)
     private readonly authTokenRepository: Repository<AuthToken>,
     private readonly userService: UserService,
+    private readonly configService: ConfigService,
   ) {}
 
   async authenticateUser(
@@ -66,5 +73,26 @@ export class AuthService {
       ...userData,
       passwordHash: generateBcrypt(userPassword),
     });
+  }
+
+  async getUserFromToken(token: string): Promise<User> {
+    const authToken = await this.authTokenRepository.findOneBy({
+      tokenHash: generateSha(token),
+    });
+
+    if (!authToken) {
+      throw new InvalidTokenException();
+    }
+
+    if (
+      moment(authToken.createdAt).add(
+        this.configService.get('auth.tokenTtl'),
+        's',
+      ) < moment()
+    ) {
+      throw new TokenExpiredException();
+    }
+
+    return authToken.user;
   }
 }

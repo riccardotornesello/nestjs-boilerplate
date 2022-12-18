@@ -10,8 +10,13 @@ export interface DatabaseConfig {
   keepConnectionAlive: boolean;
 }
 
+export interface AuthConfig {
+  tokenTtl: number;
+}
+
 export interface Config {
   database: DatabaseConfig;
+  auth: AuthConfig;
 }
 
 export const configuration = (): Config => ({
@@ -28,5 +33,8 @@ export const configuration = (): Config => ({
     ],
     migrations: [__dirname + '/../database/migrations/*{.ts,.js}'],
     keepConnectionAlive: true,
+  },
+  auth: {
+    tokenTtl: 60 * 60,
   },
 });

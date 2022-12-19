@@ -7,7 +7,6 @@
 - Cache
 - Logging
 - Docker (with multi-stage build in production)
-- Serialization
 - Websockets
 - Tests
 - Helmet

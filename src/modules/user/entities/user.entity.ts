@@ -1,4 +1,5 @@
 import { Entity, Column, OneToMany } from 'typeorm';
+import { Exclude } from 'class-transformer';
 import { BaseEntity } from '../../../common/entities/base.entity';
 import { AuthToken } from '../../auth/entities/auth-token.entity';
 import { UserPermission, UserRole } from '../../../constants';
@@ -16,6 +17,7 @@ export class User extends BaseEntity {
   email: string;
 
   @Column()
+  @Exclude()
   passwordHash: string;
 
   @Column({ default: true })

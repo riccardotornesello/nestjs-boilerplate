@@ -1,8 +1,9 @@
-import { NestFactory, HttpAdapterHost } from '@nestjs/core';
+import { NestFactory, HttpAdapterHost, Reflector } from '@nestjs/core';
 import {
   ValidationPipe,
   ValidationError,
   UnprocessableEntityException,
+  ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { useContainer } from 'class-validator';
 import { AppModule } from './app.module';
@@ -31,6 +32,8 @@ async function bootstrap() {
     new HttpExceptionFilter(httpAdapter),
     new UnprocessableEntityExceptionFilter(httpAdapter),
   );
+
+  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
 
   await app.listen(3000);
 }

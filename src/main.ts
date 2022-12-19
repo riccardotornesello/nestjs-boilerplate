@@ -5,6 +5,7 @@ import {
   UnprocessableEntityException,
   ClassSerializerInterceptor,
 } from '@nestjs/common';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { useContainer } from 'class-validator';
 import { AppModule } from './app.module';
 import {
@@ -34,6 +35,15 @@ async function bootstrap() {
   );
 
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
+
+  const swaggerConfig = new DocumentBuilder()
+    .setTitle('NestJS project')
+    .setDescription('A simple NestJS boilerplate')
+    .setVersion('1.0')
+    .addTag('nestjs')
+    .build();
+  const document = SwaggerModule.createDocument(app, swaggerConfig);
+  SwaggerModule.setup('swagger', app, document);
 
   await app.listen(3000);
 }

@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  database:
+    image: postgres:9.6
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"

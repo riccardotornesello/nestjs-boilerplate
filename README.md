@@ -18,3 +18,4 @@
 - Simple file upload
 - File upload to MinIO/S3
 - Microservices
+- Two factor authentication

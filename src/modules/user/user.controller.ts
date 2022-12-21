@@ -1,14 +1,19 @@
-import { ApiSecurity } from '@nestjs/swagger';
+// NestJS
 import { Controller, Get, Request } from '@nestjs/common';
-import { Auth } from 'src/decorators/auth.decorator';
+
+// Decorators
+import { Auth } from '../../decorators';
+
+// Services
 import { UserService } from './user.service';
+
+// Constants
 import { UserRole } from '../../constants';
 
 @Controller('users')
 export class UserController {
   constructor(private userService: UserService) {}
 
-  @ApiSecurity('bearer')
   @Auth({ roles: [UserRole.USER] })
   @Get('@me')
   async login(@Request() req) {

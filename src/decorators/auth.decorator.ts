@@ -1,9 +1,16 @@
+// NestJS
 import { applyDecorators, SetMetadata, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
-import { RolesGuard } from '../guards/roles.guard';
+import { ApiSecurity } from '@nestjs/swagger';
+
+// Guards
+import { RolesGuard, AuthGuard } from '../guards';
+import type { PermissionFunctionOptions } from '../guards';
+
+// Constants
 import { UserRole, UserPermission } from '../constants';
+
+// Entities
 import { User } from '../modules/user/entities/user.entity';
-import { PermissionFunctionOptions } from '../guards/roles.guard';
 
 export type AuthOptions = {
   roles?: UserRole[];
@@ -20,9 +27,10 @@ export function Auth({
   permissionFunction,
 }: Partial<AuthOptions>): MethodDecorator {
   return applyDecorators(
+    ApiSecurity('bearer'),
     SetMetadata('roles', roles),
     SetMetadata('permission', permission),
     SetMetadata('permissionFunction', permissionFunction),
-    UseGuards(AuthGuard('bearer'), RolesGuard),
+    UseGuards(AuthGuard, RolesGuard),
   );
 }

@@ -1,15 +1,28 @@
-import { Module } from '@nestjs/common';
+// NestJS
+import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthController } from './auth.controller';
-import { AuthService } from './auth.service';
-import { UserModule } from '../user/user.module';
-import { AuthToken } from './entities/auth-token.entity';
-import { HttpBearerStrategy } from './strategies/http-bearer.strategy';
 import { ConfigModule } from '@nestjs/config';
 
+// Controllers
+import { AuthController } from './auth.controller';
+
+// Services
+import { AuthService } from './auth.service';
+
+// Other modules
+import { UserModule } from '../user/user.module';
+
+// Entities
+import { AuthToken } from './entities/auth-token.entity';
+
 @Module({
-  imports: [TypeOrmModule.forFeature([AuthToken]), ConfigModule, UserModule],
+  imports: [
+    TypeOrmModule.forFeature([AuthToken]),
+    ConfigModule,
+    forwardRef(() => UserModule),
+  ],
   controllers: [AuthController],
-  providers: [AuthService, HttpBearerStrategy],
+  providers: [AuthService],
+  exports: [AuthService],
 })
 export class AuthModule {}

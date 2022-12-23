@@ -3,7 +3,6 @@
 ## Missing features
 
 - Multiple authentication methods
-- Cache
 - Logging
 - Docker (with multi-stage build in production)
 - Websockets

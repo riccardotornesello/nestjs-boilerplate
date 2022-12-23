@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { CacheModule, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
@@ -19,6 +19,10 @@ import { UniqueRule } from './validators/unique';
         return configService.get('database');
       },
       inject: [ConfigService],
+    }),
+    CacheModule.register({
+      isGlobal: true,
+      ttl: 100, // 100 milliseconds
     }),
     UserModule,
     AuthModule,

@@ -1,4 +1,3 @@
-import { DataSource } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import type {
   ValidationArguments,
@@ -6,7 +5,8 @@ import type {
   ValidatorConstraintInterface,
 } from 'class-validator';
 import { registerDecorator, ValidatorConstraint } from 'class-validator';
-import type { EntityTarget, BaseEntity } from 'typeorm';
+import type { BaseEntity, EntityTarget } from 'typeorm';
+import { DataSource } from 'typeorm';
 
 @ValidatorConstraint({ name: 'UserExists', async: true })
 @Injectable()

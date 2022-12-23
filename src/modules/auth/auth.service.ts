@@ -1,24 +1,25 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
+import * as moment from 'moment';
 import { Repository } from 'typeorm';
-import { UserService } from '../user/user.service';
-import { UserCredentialsDto } from './dto/user-credentials.dto';
-import { User } from '../user/entities/user.entity';
+
 import {
-  validateBcrypt,
+  generateBcrypt,
   generateRandomString,
   generateSha,
-  generateBcrypt,
+  validateBcrypt,
 } from '../../common/crypto/utils';
 import {
-  UserNotFoundException,
   InvalidTokenException,
   TokenExpiredException,
+  UserNotFoundException,
 } from '../../exceptions';
-import { AuthToken } from './entities/auth-token.entity';
+import { User } from '../user/entities/user.entity';
+import { UserService } from '../user/user.service';
+import { UserCredentialsDto } from './dto/user-credentials.dto';
 import { UserRegisterDto } from './dto/user-register.dto';
-import { ConfigService } from '@nestjs/config';
-import * as moment from 'moment';
+import { AuthToken } from './entities/auth-token.entity';
 
 @Injectable()
 export class AuthService {

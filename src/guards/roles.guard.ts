@@ -2,7 +2,7 @@ import type { CanActivate, ExecutionContext } from '@nestjs/common';
 import { Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 
-import type { UserRole, UserPermission } from '../constants';
+import type { UserPermission, UserRole } from '../constants';
 import type { User } from '../modules/user/entities/user.entity';
 
 export type PermissionFunctionOptions = {

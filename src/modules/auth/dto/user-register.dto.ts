@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, MinLength, IsNotEmpty, IsEmail } from 'class-validator';
-import { Unique } from 'src/validators/unique';
+import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
 import { User } from 'src/modules/user/entities/user.entity';
+import { Unique } from 'src/validators/unique';
 
 export class UserRegisterDto {
   @ApiProperty()

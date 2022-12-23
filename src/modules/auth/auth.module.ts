@@ -1,17 +1,14 @@
 // NestJS
-import { Module, forwardRef } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { forwardRef, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-
-// Controllers
-import { AuthController } from './auth.controller';
-
-// Services
-import { AuthService } from './auth.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 // Other modules
 import { UserModule } from '../user/user.module';
-
+// Controllers
+import { AuthController } from './auth.controller';
+// Services
+import { AuthService } from './auth.service';
 // Entities
 import { AuthToken } from './entities/auth-token.entity';
 

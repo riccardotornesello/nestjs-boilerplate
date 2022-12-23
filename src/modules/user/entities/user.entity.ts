@@ -1,8 +1,9 @@
-import { Entity, Column, OneToMany } from 'typeorm';
 import { Exclude } from 'class-transformer';
+import { Column, Entity, OneToMany } from 'typeorm';
+
 import { BaseEntity } from '../../../common/entities/base.entity';
-import { AuthToken } from '../../auth/entities/auth-token.entity';
 import { UserPermission, UserRole } from '../../../constants';
+import { AuthToken } from '../../auth/entities/auth-token.entity';
 
 @Entity()
 export class User extends BaseEntity {

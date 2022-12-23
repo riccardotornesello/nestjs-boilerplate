@@ -11,7 +11,6 @@
 - CORS
 - CSRF
 - Rate limit
-- Versioning
 - Queue (Bull) with periodic tasks
 - Compression
 - Simple file upload

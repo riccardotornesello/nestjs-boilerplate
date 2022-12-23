@@ -3,6 +3,7 @@ import {
   UnprocessableEntityException,
   ValidationError,
   ValidationPipe,
+  VersioningType,
 } from '@nestjs/common';
 import { HttpAdapterHost, NestFactory, Reflector } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
@@ -36,6 +37,11 @@ async function bootstrap() {
   );
 
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
+
+  app.enableVersioning({
+    type: VersioningType.URI,
+    defaultVersion: '1',
+  });
 
   const swaggerConfig = new DocumentBuilder()
     .setTitle('NestJS project')

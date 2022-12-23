@@ -30,7 +30,7 @@ export class AuthGuard implements CanActivate {
     if (!authorization || Array.isArray(authorization)) {
       throw new MissingTokenException();
     }
-    const [_, token] = authorization.split(' ');
+    const [, token] = authorization.split(' ');
     return token;
   }
 }

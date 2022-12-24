@@ -93,9 +93,10 @@ export class CacheInterceptor implements NestInterceptor {
 
     const url = httpAdapter.getRequestUrl(request);
     if (request.user) {
-      return `${url}:${request.user.id}`;
+      return `cache:${url}:${request.user.id}`;
+    } else {
+      return `cache:${url}`;
     }
-    return url;
   }
 
   protected isRequestCacheable(context: ExecutionContext): boolean {

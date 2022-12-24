@@ -1,6 +1,7 @@
-import { CacheModule, Module } from '@nestjs/common';
+import { CacheModule, CacheStore, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { redisStore } from 'cache-manager-redis-yet';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -20,9 +21,14 @@ import { UniqueRule } from './validators/unique';
       },
       inject: [ConfigService],
     }),
-    CacheModule.register({
+    CacheModule.registerAsync({
       isGlobal: true,
-      ttl: 100, // 100 milliseconds
+      useFactory: async () => ({
+        ttl: 100, // 100 milliseconds
+        store: (await redisStore({
+          url: 'redis://localhost:6379',
+        })) as unknown as CacheStore,
+      }),
     }),
     UserModule,
     AuthModule,

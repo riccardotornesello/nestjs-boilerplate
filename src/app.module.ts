@@ -23,12 +23,17 @@ import { UniqueRule } from './validators/unique';
     }),
     CacheModule.registerAsync({
       isGlobal: true,
-      useFactory: async () => ({
+      useFactory: async (configService: ConfigService) => ({
         ttl: 100, // 100 milliseconds
         store: (await redisStore({
-          url: 'redis://localhost:6379',
-        })) as unknown as CacheStore,
+          socket: {
+            host: configService.get('redis.host'),
+            port: configService.get('redis.port'),
+          },
+          password: configService.get('redis.password'),
+        })) as CacheStore,
       }),
+      inject: [ConfigService],
     }),
     UserModule,
     AuthModule,

@@ -14,9 +14,16 @@ export interface AuthConfig {
   tokenTtl: number;
 }
 
+export interface RedisConfig {
+  host: string;
+  port: number;
+  password?: string;
+}
+
 export interface Config {
   database: DatabaseConfig;
   auth: AuthConfig;
+  redis: RedisConfig;
 }
 
 export const configuration = (): Config => ({
@@ -36,5 +43,10 @@ export const configuration = (): Config => ({
   },
   auth: {
     tokenTtl: 60 * 60,
+  },
+  redis: {
+    host: process.env.REDIS_HOST || '127.0.0.1',
+    port: parseInt(process.env.REDIS_PORT, 10) || 6379,
+    password: process.env.REDIS_PASSWORD || undefined,
   },
 });

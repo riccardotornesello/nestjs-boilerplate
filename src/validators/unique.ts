@@ -1,31 +1,7 @@
-import { Injectable } from '@nestjs/common';
-import type {
-  ValidationArguments,
-  ValidationOptions,
-  ValidatorConstraintInterface,
-} from 'class-validator';
-import { registerDecorator, ValidatorConstraint } from 'class-validator';
+import type { ValidationOptions } from 'class-validator';
+import { registerDecorator } from 'class-validator';
+import { UniqueRule } from 'src/shared/validator-rules/unique-rule';
 import type { BaseEntity, EntityTarget } from 'typeorm';
-import { DataSource } from 'typeorm';
-
-@ValidatorConstraint({ name: 'UserExists', async: true })
-@Injectable()
-export class UniqueRule implements ValidatorConstraintInterface {
-  constructor(private dataSource: DataSource) {}
-
-  async validate(value: string, args: any) {
-    const [entity, field] = args.constraints;
-    return (
-      (await this.dataSource.getRepository(entity).count({
-        where: { [field]: value },
-      })) <= 0
-    );
-  }
-
-  defaultMessage(args: ValidationArguments) {
-    return `Value ${args.value} already exists`;
-  }
-}
 
 export function Unique(
   entity: EntityTarget<BaseEntity>,

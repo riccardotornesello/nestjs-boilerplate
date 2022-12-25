@@ -4,7 +4,6 @@ import { createClient, RedisClientType } from 'redis';
 
 @Injectable()
 export class RedisService {
-  // TODO: redis cluster
   _client: RedisClientType;
 
   constructor(private configService: ConfigService) {

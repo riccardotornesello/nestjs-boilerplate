@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { CacheModule, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
@@ -19,6 +19,10 @@ import { SharedModule } from './shared/shared.module';
         return configService.get('database');
       },
       inject: [ConfigService],
+    }),
+    CacheModule.register({
+      isGlobal: true,
+      ttl: 500, // milliseconds
     }),
     SharedModule,
     UserModule,

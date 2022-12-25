@@ -6,7 +6,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 
-import { CacheInterceptor } from '../interceptors';
+import { HttpCacheInterceptor } from '../interceptors';
 
 export type CacheOptions = {
   ttl?: number;
@@ -19,7 +19,7 @@ export function Cache({
   authenticationAware,
   key,
 }: CacheOptions = {}): MethodDecorator {
-  const decorators = [UseInterceptors(CacheInterceptor)];
+  const decorators = [UseInterceptors(HttpCacheInterceptor)];
 
   if (authenticationAware) {
     decorators.push(

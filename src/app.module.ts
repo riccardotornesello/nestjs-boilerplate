@@ -1,13 +1,12 @@
-import { CacheModule, CacheStore, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { redisStore } from 'cache-manager-redis-yet';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { Config, configuration } from './config';
 import { AuthModule, UserModule } from './modules';
-import { UniqueRule } from './validators/unique';
+import { SharedModule } from './shared/shared.module';
 
 @Module({
   imports: [
@@ -21,24 +20,11 @@ import { UniqueRule } from './validators/unique';
       },
       inject: [ConfigService],
     }),
-    CacheModule.registerAsync({
-      isGlobal: true,
-      useFactory: async (configService: ConfigService) => ({
-        ttl: 100, // 100 milliseconds
-        store: (await redisStore({
-          socket: {
-            host: configService.get('redis.host'),
-            port: configService.get('redis.port'),
-          },
-          password: configService.get('redis.password'),
-        })) as CacheStore,
-      }),
-      inject: [ConfigService],
-    }),
+    SharedModule,
     UserModule,
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService, UniqueRule],
+  providers: [AppService],
 })
 export class AppModule {}

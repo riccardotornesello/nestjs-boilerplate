@@ -1,6 +1,5 @@
 // NestJS
 import { forwardRef, Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 // Other modules
@@ -15,7 +14,6 @@ import { AuthToken } from './entities/auth-token.entity';
 @Module({
   imports: [
     TypeOrmModule.forFeature([AuthToken]),
-    ConfigModule,
     forwardRef(() => UserModule),
   ],
   controllers: [AuthController],

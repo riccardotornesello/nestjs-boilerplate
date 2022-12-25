@@ -1,1 +1,1 @@
-export * from './cache.interceptor';
+export * from './http-cache.interceptor';

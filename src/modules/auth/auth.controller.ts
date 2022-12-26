@@ -1,10 +1,4 @@
-import {
-  Body,
-  Controller,
-  Post,
-  UnprocessableEntityException,
-  ValidationError,
-} from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 
 import { UserService } from '../user/user.service';
 import { AuthService } from './auth.service';

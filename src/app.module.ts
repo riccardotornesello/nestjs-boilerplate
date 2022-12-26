@@ -20,7 +20,7 @@ import { SharedModule } from './shared/shared.module';
     }),
     TypeOrmModule.forRootAsync({
       useFactory: (configService: ConfigService<Config>) => {
-        return configService.get('database');
+        return configService.get('postgres');
       },
       inject: [ConfigService],
     }),

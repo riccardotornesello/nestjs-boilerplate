@@ -6,6 +6,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { Config, configuration } from './config';
 import { AuthModule, UserModule } from './modules';
+import { RedisCacheStore } from './services/redis-cache-store';
+import { RedisService } from './shared/services/redis.service';
 import { SharedModule } from './shared/shared.module';
 
 @Module({
@@ -20,9 +22,14 @@ import { SharedModule } from './shared/shared.module';
       },
       inject: [ConfigService],
     }),
-    CacheModule.register({
+    CacheModule.registerAsync({
       isGlobal: true,
-      ttl: 500, // milliseconds
+      useFactory: (redisService: RedisService) => ({
+        store: new RedisCacheStore(redisService.client, {
+          ttl: 100, // milliseconds
+        }),
+      }),
+      inject: [RedisService],
     }),
     SharedModule,
     UserModule,

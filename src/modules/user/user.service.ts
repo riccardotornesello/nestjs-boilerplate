@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import type { DeepPartial, FindOptionsWhere } from 'typeorm';
+import type { DeepPartial, DeleteResult, FindOptionsWhere } from 'typeorm';
 import { Repository } from 'typeorm';
 
 import { User } from './entities/user.entity';
@@ -30,5 +30,9 @@ export class UserService {
 
   createOne(userData: DeepPartial<User>): Promise<User> {
     return this.userRepository.save(userData);
+  }
+
+  resetData(): Promise<DeleteResult> {
+    return this.userRepository.delete({});
   }
 }

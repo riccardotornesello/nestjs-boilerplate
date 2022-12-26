@@ -8,6 +8,9 @@ export class AuthToken extends BaseEntity {
   @PrimaryColumn()
   tokenHash: string;
 
-  @ManyToOne(() => User, (user) => user.authTokens, { eager: true })
+  @ManyToOne(() => User, (user) => user.authTokens, {
+    eager: true,
+    onDelete: 'CASCADE',
+  })
   user: User;
 }

@@ -7,7 +7,6 @@
 - Docker (with multi-stage build in production)
 - Websockets
 - Tests
-- Helmet
 - CORS
 - CSRF
 - Rate limit

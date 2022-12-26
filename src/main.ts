@@ -8,6 +8,7 @@ import {
 import { HttpAdapterHost, NestFactory, Reflector } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { useContainer } from 'class-validator';
+import helmet from 'helmet';
 
 import { AppModule } from './app.module';
 import {
@@ -22,6 +23,8 @@ async function bootstrap() {
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
   const httpAdapter = app.get(HttpAdapterHost);
+
+  app.use(helmet());
 
   app.useGlobalPipes(
     new ValidationPipe({

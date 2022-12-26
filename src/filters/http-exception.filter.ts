@@ -4,6 +4,7 @@ import {
   ExceptionFilter,
   HttpException,
   HttpStatus,
+  Logger,
 } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
 
@@ -30,9 +31,8 @@ export class HttpExceptionFilter implements ExceptionFilter {
             path: httpAdapter.getRequestUrl(ctx.getRequest()),
           };
 
-    // TODO: proper logging
     if (httpStatus === HttpStatus.INTERNAL_SERVER_ERROR) {
-      console.log('exception', exception);
+      Logger.error(exception, 'HttpExceptionFilter');
     }
 
     httpAdapter.reply(ctx.getResponse(), responseBody, httpStatus);

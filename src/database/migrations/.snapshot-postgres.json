@@ -138,6 +138,68 @@
     },
     {
       "columns": {
+        "user_id": {
+          "name": "user_id",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "verified_at": {
+          "name": "verified_at",
+          "type": "timestamptz(0)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "length": 6,
+          "mappedType": "datetime"
+        },
+        "last_sent": {
+          "name": "last_sent",
+          "type": "timestamptz(0)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "length": 6,
+          "mappedType": "datetime"
+        }
+      },
+      "name": "email_verification",
+      "schema": "public",
+      "indexes": [
+        {
+          "keyName": "email_verification_pkey",
+          "columnNames": [
+            "user_id"
+          ],
+          "composite": false,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {
+        "email_verification_user_id_foreign": {
+          "constraintName": "email_verification_user_id_foreign",
+          "columnNames": [
+            "user_id"
+          ],
+          "localTableName": "public.email_verification",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "public.user",
+          "deleteRule": "cascade",
+          "updateRule": "cascade"
+        }
+      }
+    },
+    {
+      "columns": {
         "id": {
           "name": "id",
           "type": "serial",

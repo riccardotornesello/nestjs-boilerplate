@@ -1,9 +1,18 @@
-import { Collection, Entity, Enum, OneToMany, Property } from '@mikro-orm/core';
+import {
+  Cascade,
+  Collection,
+  Entity,
+  Enum,
+  OneToMany,
+  OneToOne,
+  Property,
+} from '@mikro-orm/core';
 import { Exclude } from 'class-transformer';
 
 import { BaseEntity } from '../../../common/entities/base.entity';
 import { UserPermission, UserRole } from '../../../constants';
 import { AuthToken } from '../../auth/entities/auth-token.entity';
+import { EmailVerification } from '../../auth/entities/email-verification.entity';
 
 @Entity()
 export class User extends BaseEntity {
@@ -36,6 +45,13 @@ export class User extends BaseEntity {
     mappedBy: (authToken) => authToken.user,
   })
   authTokens = new Collection<AuthToken>(this);
+
+  @OneToOne(
+    () => EmailVerification,
+    (emailVerification) => emailVerification.user,
+    { cascade: [Cascade.ALL] },
+  )
+  emailVerification?: EmailVerification;
 
   hasRoleIn(roles: UserRole[]): boolean {
     return roles.includes(this.role);

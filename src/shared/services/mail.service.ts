@@ -3,8 +3,8 @@ import { ConfigService } from '@nestjs/config';
 import * as nodemailer from 'nodemailer';
 
 export interface SendMailOptions {
-  fromEmail?: string;
-  fromName?: string;
+  senderEmail?: string;
+  senderName?: string;
   to: string;
   subject: string;
   text?: string;
@@ -31,14 +31,14 @@ export class MailService {
   async sendMail(
     mailOptions: SendMailOptions,
   ): Promise<nodemailer.SentMessageInfo> {
-    const fromEmail =
-      mailOptions.fromEmail || this.configService.get('mail.fromEmail');
-    const fromName =
-      mailOptions.fromName || this.configService.get('mail.fromName');
+    const senderEmail =
+      mailOptions.senderEmail || this.configService.get('mail.senderEmail');
+    const senderName =
+      mailOptions.senderName || this.configService.get('mail.senderName');
 
-    let from = fromEmail;
-    if (fromName) {
-      from = `"${fromName}" <${fromEmail}>`;
+    let from = senderEmail;
+    if (senderName) {
+      from = `"${senderName}" <${senderEmail}>`;
     }
 
     return await this.transporter.sendMail({

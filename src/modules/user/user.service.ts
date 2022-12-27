@@ -1,8 +1,4 @@
-import {
-  EntityRepository,
-  FilterQuery,
-  RequiredEntityData,
-} from '@mikro-orm/core';
+import { EntityRepository, RequiredEntityData } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable } from '@nestjs/common';
 
@@ -15,19 +11,9 @@ export class UserService {
     private readonly userRepository: EntityRepository<User>,
   ) {}
 
-  findOne(findData: FilterQuery<User>): Promise<User | null> {
-    return this.userRepository.findOne(findData);
-  }
-
   getByUsername(username: string): Promise<User | null> {
-    return this.findOne({
+    return this.userRepository.findOne({
       username,
-    });
-  }
-
-  getByEmail(email: string): Promise<User | null> {
-    return this.findOne({
-      email,
     });
   }
 

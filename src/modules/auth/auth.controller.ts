@@ -25,10 +25,6 @@ export class AuthController {
   @Post('register')
   async register(@Body() userRegisterDto: UserRegisterDto) {
     const user = await this.authService.registerUser(userRegisterDto);
-    const token = await this.authService.generateAuthToken(user);
-
-    return {
-      token,
-    };
+    await this.authService.sendEmailVerification(user);
   }
 }

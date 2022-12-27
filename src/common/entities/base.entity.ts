@@ -1,26 +1,12 @@
-import {
-  CreateDateColumn,
-  DeleteDateColumn,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { PrimaryKey, Property, types } from '@mikro-orm/core';
 
 export abstract class BaseEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryKey()
   id: number;
 
-  @CreateDateColumn({
-    type: 'timestamptz',
-  })
-  createdAt: Date;
+  @Property({ type: types.datetime })
+  createdAt = new Date();
 
-  @UpdateDateColumn({
-    type: 'timestamptz',
-  })
-  updatedAt: Date;
-
-  @DeleteDateColumn({
-    type: 'timestamptz',
-  })
-  deletedDate: Date;
+  @Property({ type: types.datetime, onUpdate: () => new Date() })
+  updatedAt = new Date();
 }

@@ -1,7 +1,10 @@
+import {
+  EntityRepository,
+  FilterQuery,
+  RequiredEntityData,
+} from '@mikro-orm/core';
+import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import type { DeepPartial, DeleteResult, FindOptionsWhere } from 'typeorm';
-import { Repository } from 'typeorm';
 
 import { User } from './entities/user.entity';
 
@@ -9,11 +12,11 @@ import { User } from './entities/user.entity';
 export class UserService {
   constructor(
     @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
+    private readonly userRepository: EntityRepository<User>,
   ) {}
 
-  findOne(findData: FindOptionsWhere<User>): Promise<User | null> {
-    return this.userRepository.findOneBy(findData);
+  findOne(findData: FilterQuery<User>): Promise<User | null> {
+    return this.userRepository.findOne(findData);
   }
 
   getByUsername(username: string): Promise<User | null> {
@@ -28,11 +31,13 @@ export class UserService {
     });
   }
 
-  createOne(userData: DeepPartial<User>): Promise<User> {
-    return this.userRepository.save(userData);
+  async createOne(userData: RequiredEntityData<User>): Promise<User> {
+    const user = this.userRepository.create(userData);
+    await this.userRepository.persistAndFlush(user);
+    return user;
   }
 
-  resetData(): Promise<DeleteResult> {
-    return this.userRepository.delete({});
+  resetData(): Promise<number> {
+    return this.userRepository.nativeDelete({});
   }
 }

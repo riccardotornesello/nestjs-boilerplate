@@ -1,11 +1,11 @@
+import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { CacheModule, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ThrottlerModule } from '@nestjs/throttler';
-import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { Config, configuration } from './config';
+import { configuration } from './config';
 import { AuthModule, UserModule } from './modules';
 import { RedisCacheStore } from './services/redis-cache-store';
 import { RedisThrottlerStoreService } from './services/redis-throttler-store';
@@ -18,11 +18,17 @@ import { SharedModule } from './shared/shared.module';
       load: [configuration],
       isGlobal: true,
     }),
-    TypeOrmModule.forRootAsync({
-      useFactory: (configService: ConfigService<Config>) => {
-        return configService.get('postgres');
-      },
+    MikroOrmModule.forRootAsync({
       inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        dbName: configService.get('postgres.database'),
+        user: configService.get('postgres.username'),
+        password: configService.get('postgres.password'),
+        host: configService.get('postgres.host'),
+        port: configService.get('postgres.port'),
+        type: 'postgresql',
+        autoLoadEntities: true,
+      }),
     }),
     CacheModule.registerAsync({
       isGlobal: true,

@@ -1,13 +1,9 @@
 export interface PostgresConfig {
-  type: string;
   host: string;
   port: number;
   username: string;
   password: string;
   database: string;
-  entities: string[];
-  migrations: string[];
-  keepConnectionAlive: boolean;
 }
 
 export interface AuthConfig {
@@ -45,21 +41,14 @@ export interface Config {
 
 export const configuration = (): Config => ({
   postgres: {
-    type: 'postgres',
     host: process.env.POSTGRES_HOST || '127.0.0.1',
     port: parseInt(process.env.POSTGRES_PORT, 10) || 5432,
     username: process.env.POSTGRES_USERNAME || 'postgres',
     password: process.env.POSTGRES_PASSWORD || 'postgres',
     database: process.env.POSTGRES_NAME || 'postgres',
-    entities: [
-      __dirname + '/../modules/**/*.entity{.ts,.js}',
-      __dirname + '/../modules/**/*.view-entity{.ts,.js}',
-    ],
-    migrations: [__dirname + '/../database/migrations/*{.ts,.js}'],
-    keepConnectionAlive: true,
   },
   auth: {
-    tokenTtl: 60 * 60,
+    tokenTtl: 60 * 60 * 24, // 1 day
   },
   redis: {
     host: process.env.REDIS_HOST || '127.0.0.1',

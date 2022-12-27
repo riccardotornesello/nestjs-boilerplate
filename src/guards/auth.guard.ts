@@ -1,9 +1,6 @@
-// NestJS
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 
-// Exceptions
-import { InvalidTokenException, MissingTokenException } from '../exceptions';
-// Services
+import { MissingTokenException } from '../exceptions';
 import { AuthService } from '../modules/auth/auth.service';
 
 @Injectable()
@@ -15,9 +12,6 @@ export class AuthGuard implements CanActivate {
     const token = this.getToken(request);
 
     const user = await this.authService.getUserFromToken(token);
-    if (!user) {
-      throw new InvalidTokenException();
-    }
 
     request.user = user;
     return true;

@@ -1,16 +1,17 @@
-import { Entity, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Entity, LoadStrategy, ManyToOne, Property } from '@mikro-orm/core';
 
 import { BaseEntity } from '../../../common/entities/base.entity';
 import { User } from '../../user/entities/user.entity';
 
 @Entity()
 export class AuthToken extends BaseEntity {
-  @PrimaryColumn()
+  @Property()
   tokenHash: string;
 
-  @ManyToOne(() => User, (user) => user.authTokens, {
+  @ManyToOne({
+    entity: () => User,
+    strategy: LoadStrategy.JOINED,
     eager: true,
-    onDelete: 'CASCADE',
   })
   user: User;
 }

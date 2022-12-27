@@ -1,8 +1,8 @@
+import { EntityRepository } from '@mikro-orm/core';
+import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { InjectRepository } from '@nestjs/typeorm';
 import * as moment from 'moment';
-import { Repository } from 'typeorm';
 
 import {
   generateBcrypt,
@@ -25,13 +25,12 @@ import { AuthToken } from './entities/auth-token.entity';
 export class AuthService {
   constructor(
     @InjectRepository(AuthToken)
-    private readonly authTokenRepository: Repository<AuthToken>,
+    private readonly authTokenRepository: EntityRepository<AuthToken>,
     private readonly userService: UserService,
     private readonly configService: ConfigService,
   ) {}
 
   async authenticateUser(
-    @InjectRepository(AuthToken)
     userCredentialsDto: UserCredentialsDto,
   ): Promise<User> {
     const user = await this.userService.findOne({
@@ -57,10 +56,11 @@ export class AuthService {
   async generateAuthToken(user: User): Promise<string> {
     const randomString = generateRandomString(32);
 
-    await this.authTokenRepository.save({
+    const authToken = this.authTokenRepository.create({
       user,
       tokenHash: generateSha(randomString),
     });
+    await this.authTokenRepository.persistAndFlush(authToken);
 
     return randomString;
   }
@@ -70,14 +70,14 @@ export class AuthService {
     const userPassword = userData.password;
     delete userData.password;
 
-    return this.userService.createOne({
+    return await this.userService.createOne({
       ...userData,
       passwordHash: generateBcrypt(userPassword),
     });
   }
 
   async getUserFromToken(token: string): Promise<User> {
-    const authToken = await this.authTokenRepository.findOneBy({
+    const authToken = await this.authTokenRepository.findOne({
       tokenHash: generateSha(token),
     });
 

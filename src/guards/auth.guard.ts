@@ -1,7 +1,7 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 
 import { MissingTokenException } from '../exceptions';
-import { AuthService } from '../modules/auth/auth.service';
+import { AuthService } from '../modules/app/auth/auth.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {

@@ -9,8 +9,8 @@ import {
 } from '@mikro-orm/core';
 import { Exclude } from 'class-transformer';
 
-import { BaseEntity } from '../../../common/entities/base.entity';
-import { UserPermission, UserRole } from '../../../constants';
+import { UserPermission, UserRole } from '../../../../constants';
+import { BaseEntity } from '../../../../utils/base.entity';
 import { AuthToken } from '../../auth/entities/auth-token.entity';
 import { EmailVerification } from '../../auth/entities/email-verification.entity';
 

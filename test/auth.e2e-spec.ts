@@ -4,7 +4,7 @@ import * as request from 'supertest';
 
 import { initApp } from '../src/app.init';
 import { AppModule } from '../src/app.module';
-import { UserService } from '../src/modules/user/user.service';
+import { UserService } from '../src/modules/app/user/user.service';
 
 describe('Authentication', () => {
   let app: INestApplication;

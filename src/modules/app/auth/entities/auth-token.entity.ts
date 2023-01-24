@@ -1,6 +1,6 @@
 import { Entity, LoadStrategy, ManyToOne, Property } from '@mikro-orm/core';
 
-import { BaseEntity } from '../../../common/entities/base.entity';
+import { BaseEntity } from '../../../../utils/base.entity';
 import { User } from '../../user/entities/user.entity';
 
 @Entity()

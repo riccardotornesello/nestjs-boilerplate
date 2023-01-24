@@ -1,11 +1,7 @@
-// NestJS
 import { Controller, Get, Request } from '@nestjs/common';
 
-// Constants
-import { UserRole } from '../../constants';
-// Decorators
-import { Auth } from '../../decorators';
-// Services
+import { UserRole } from '../../../constants';
+import { Auth } from '../../../decorators';
 import { UserService } from './user.service';
 
 @Controller('users')

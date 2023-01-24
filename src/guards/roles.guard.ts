@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 
 import type { UserPermission, UserRole } from '../constants';
-import type { User } from '../modules/user/entities/user.entity';
+import type { User } from '../modules/app/user/entities/user.entity';
 
 export type PermissionFunctionOptions = {
   roles?: UserRole[];

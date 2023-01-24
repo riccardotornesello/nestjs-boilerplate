@@ -5,20 +5,20 @@ import { ConfigService } from '@nestjs/config';
 import * as moment from 'moment';
 
 import {
+  InvalidTokenException,
+  TokenExpiredException,
+  UserNotFoundException,
+} from '../../../exceptions';
+import { EmailNotVerifiedException } from '../../../exceptions/email-not-verified.exception';
+import { InvalidActionException } from '../../../exceptions/invalid-action.exception';
+import { RateLimitException } from '../../../exceptions/rate-limit.exception';
+import {
   generateBcrypt,
   generateRandomString,
   generateSha,
   validateBcrypt,
-} from '../../common/crypto/utils';
-import {
-  InvalidTokenException,
-  TokenExpiredException,
-  UserNotFoundException,
-} from '../../exceptions';
-import { EmailNotVerifiedException } from '../../exceptions/email-not-verified.exception';
-import { InvalidActionException } from '../../exceptions/invalid-action.exception';
-import { RateLimitException } from '../../exceptions/rate-limit.exception';
-import { MailService } from '../../shared/services/mail.service';
+} from '../../../utils/crypto';
+import { MailService } from '../../shared/mail/mail.service';
 import { User } from '../user/entities/user.entity';
 import { UserService } from '../user/user.service';
 import { UserCredentialsDto } from './dto/user-credentials.dto';

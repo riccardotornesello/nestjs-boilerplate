@@ -2,7 +2,7 @@ import type { EntityName } from '@mikro-orm/core';
 import type { ValidationOptions } from 'class-validator';
 import { registerDecorator } from 'class-validator';
 
-import { UniqueRule } from '../shared/validator-rules/unique-rule';
+import { UniqueRule } from '../validator-rules/unique-rule';
 
 export function Unique(
   entity: EntityName<object>,

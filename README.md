@@ -1,5 +1,33 @@
 # NestJS Boilerplate
 
+## Nice features
+
+- API Versioning
+- Automatic linting (ESLint) and formatting (Prettier)
+- Caching (Redis)
+- Email
+- Rate limit
+
+## Modules
+
+### From NestJS
+
+- ConfigModule
+- MokroOrmModule
+- CacheModule
+- ThrottlerModule
+
+### Shared
+
+- RedisService
+- MailService
+- SharedService
+
+### App modules
+
+- Auth
+- User
+
 ## Missing features
 
 - Multiple authentication methods
@@ -16,3 +44,4 @@
 - File upload to MinIO/S3
 - Microservices
 - Two factor authentication
+- Web vitals

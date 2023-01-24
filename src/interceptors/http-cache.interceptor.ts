@@ -10,7 +10,7 @@ import {
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-import { isFunction, isNil } from '../common/utils';
+import { isFunction, isNil } from '../utils/shared';
 
 @Injectable()
 export class HttpCacheInterceptor extends CacheInterceptor {

@@ -57,7 +57,7 @@ export class HttpCacheInterceptor extends CacheInterceptor {
     const httpAdapter = this.httpAdapterHost.httpAdapter;
     const isHttpApp = httpAdapter && !!httpAdapter.getRequestMethod;
 
-    const cacheMetadata = this.reflector.get(
+    const cacheKeyMetadata = this.reflector.get(
       CACHE_KEY_METADATA,
       context.getHandler(),
     );
@@ -66,8 +66,8 @@ export class HttpCacheInterceptor extends CacheInterceptor {
       context.getHandler(),
     );
 
-    if (!isHttpApp || cacheMetadata) {
-      return cacheMetadata;
+    if (!isHttpApp) {
+      return cacheKeyMetadata;
     }
 
     const request = context.getArgByIndex(0);
@@ -76,12 +76,13 @@ export class HttpCacheInterceptor extends CacheInterceptor {
     }
 
     const url = httpAdapter.getRequestUrl(request);
+    const cacheKey = cacheKeyMetadata || url;
     if (authenticationAware === false) {
-      return `cache:${url}`;
+      return `cache:${cacheKey}`;
     } else if (request.user) {
-      return `cache:${url}:${request.user.id}`;
+      return `cache:${cacheKey}:${request.user.id}`;
     } else {
-      return `cache:${url}:anonymous`;
+      return `cache:${cacheKey}:anonymous`;
     }
   }
 }

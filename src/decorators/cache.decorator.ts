@@ -30,7 +30,7 @@ export function Cache({
     decorators.push(CacheTTL(ttl));
   }
   if (key) {
-    decorators.push(CacheKey(`cache:${key}`));
+    decorators.push(CacheKey(key));
   }
 
   return applyDecorators(...decorators);

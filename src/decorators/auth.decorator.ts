@@ -1,9 +1,12 @@
 import { applyDecorators, SetMetadata, UseGuards } from '@nestjs/common';
 import { ApiSecurity } from '@nestjs/swagger';
+import {
+  AuthGuard,
+  PermissionFunctionOptions,
+  RolesGuard,
+} from 'src/modules/app/auth/guards';
 
 import { UserPermission, UserRole } from '../constants';
-import type { PermissionFunctionOptions } from '../guards';
-import { AuthGuard, RolesGuard } from '../guards';
 import { User } from '../modules/app/user/entities/user.entity';
 
 export type AuthOptions = {

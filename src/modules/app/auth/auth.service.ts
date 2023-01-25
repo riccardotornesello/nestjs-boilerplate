@@ -39,6 +39,7 @@ export class AuthService {
 
   async authenticateUser(
     userCredentialsDto: UserCredentialsDto,
+    checkEmailVerification = true,
   ): Promise<User> {
     const user = await this.userService.getByUsername(
       userCredentialsDto.username,
@@ -57,7 +58,7 @@ export class AuthService {
       throw new UserNotFoundException();
     }
 
-    if (!user.emailVerification?.verifiedAt) {
+    if (checkEmailVerification && !user.emailVerification?.verifiedAt) {
       throw new EmailNotVerifiedException();
     }
 

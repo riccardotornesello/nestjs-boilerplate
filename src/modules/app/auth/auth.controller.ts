@@ -27,4 +27,15 @@ export class AuthController {
     const user = await this.authService.registerUser(userRegisterDto);
     await this.authService.sendEmailVerification(user);
   }
+
+  @Post('email/verification/resend')
+  async resendEmailVerification(
+    @Body() userCredentialsDto: UserCredentialsDto,
+  ) {
+    const user = await this.authService.authenticateUser(
+      userCredentialsDto,
+      false,
+    );
+    await this.authService.sendEmailVerification(user);
+  }
 }

@@ -8,6 +8,7 @@ export class HttpThrottlerGuard extends ThrottlerGuard {
     return req.ips.length ? req.ips[0] : req.ip; // individualize IP extraction to meet your own needs
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   protected throwThrottlingException(context: ExecutionContext): void {
     throw new RateLimitException();
   }

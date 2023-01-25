@@ -3,21 +3,14 @@ import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import * as moment from 'moment';
-
-import {
-  InvalidTokenException,
-  TokenExpiredException,
-  UserNotFoundException,
-} from '../../../exceptions';
-import { EmailNotVerifiedException } from '../../../exceptions/email-not-verified.exception';
-import { InvalidActionException } from '../../../exceptions/invalid-action.exception';
-import { RateLimitException } from '../../../exceptions/rate-limit.exception';
+import { InvalidActionException, RateLimitException } from 'src/exceptions';
 import {
   generateBcrypt,
   generateRandomString,
   generateSha,
   validateBcrypt,
-} from '../../../utils/crypto';
+} from 'src/utils/crypto';
+
 import { MailService } from '../../shared/mail/mail.service';
 import { User } from '../user/entities/user.entity';
 import { UserService } from '../user/user.service';
@@ -25,6 +18,12 @@ import { UserCredentialsDto } from './dto/user-credentials.dto';
 import { UserRegisterDto } from './dto/user-register.dto';
 import { AuthToken } from './entities/auth-token.entity';
 import { EmailVerification } from './entities/email-verification.entity';
+import {
+  EmailNotVerifiedException,
+  InvalidTokenException,
+  TokenExpiredException,
+  UserNotFoundException,
+} from './exceptions';
 
 @Injectable()
 export class AuthService {

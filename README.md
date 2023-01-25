@@ -119,7 +119,11 @@ _TODO: function that executes a function if the cache is not set (get or set usi
 
 It is possible to use NestJS's `@nestjs/throttler` to limit the user's interactions using the custom `RateLimit` decorator from `decorators/rate-limit.decorator.ts`
 
-The behaviour is the same as `Throttle` described in the documentation (https://docs.nestjs.com/security/rate-limiting) but it automatically inserts a custom `ThrottleGuard`. The custom guard overrides the `getTracker` function to get the real IP address behind a reverse proxy. To update how to identify a user, just update the `getTracker` function in `guards/http-throttler.guard.ts`.
+The behaviour is the same as `Throttle` described in the documentation (https://docs.nestjs.com/security/rate-limiting) but it automatically inserts a custom `ThrottleGuard`.
+
+The custom guard overrides the `getTracker` function to get the real IP address behind a reverse proxy. To update how to identify a user, just update the `getTracker` function in `guards/http-throttler.guard.ts`.
+
+Also the `throwThrottlingException` has been overwritten to throw a custom exception.
 
 Example:
 

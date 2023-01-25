@@ -2,8 +2,11 @@ import { Body, Controller, Post } from '@nestjs/common';
 
 import { UserService } from '../user/user.service';
 import { AuthService } from './auth.service';
-import { UserCredentialsDto } from './dto/user-credentials.dto';
-import { UserRegisterDto } from './dto/user-register.dto';
+import {
+  EmailVerificationDto,
+  UserCredentialsDto,
+  UserRegisterDto,
+} from './dto';
 
 @Controller('auth')
 export class AuthController {
@@ -28,7 +31,7 @@ export class AuthController {
     await this.authService.sendEmailVerification(user);
   }
 
-  @Post('email/verification/resend')
+  @Post('email/verification-resend')
   async resendEmailVerification(
     @Body() userCredentialsDto: UserCredentialsDto,
   ) {
@@ -37,5 +40,17 @@ export class AuthController {
       false,
     );
     await this.authService.sendEmailVerification(user);
+  }
+
+  @Post('email/verify')
+  async verifyEmail(@Body() emailVerificationDto: EmailVerificationDto) {
+    const user = await this.authService.verifyEmail(
+      emailVerificationDto.verificationToken,
+    );
+    const token = await this.authService.generateAuthToken(user);
+
+    return {
+      token,
+    };
   }
 }

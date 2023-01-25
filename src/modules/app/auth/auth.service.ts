@@ -116,30 +116,30 @@ export class AuthService {
   }
 
   async sendEmailVerification(user: User): Promise<void> {
-    if (!user.emailVerification) {
-      user.emailVerification = this.emailVerificationRepository.create({
+    let emailVerification = user.emailVerification;
+
+    if (!emailVerification) {
+      emailVerification = this.emailVerificationRepository.create({
         user,
       });
-      await this.emailVerificationRepository.persistAndFlush(
-        user.emailVerification,
-      );
     }
 
-    if (user.emailVerification.verifiedAt) {
+    if (emailVerification.verifiedAt) {
       throw new InvalidActionException();
     }
 
     if (
-      user.emailVerification.lastSent &&
-      moment(user.emailVerification.lastSent).add(60, 's') > moment()
+      emailVerification.lastSent &&
+      moment(emailVerification.lastSent).add(60, 's') > moment()
     ) {
       throw new RateLimitException();
     }
 
-    user.emailVerification.lastSent = new Date();
-    await this.emailVerificationRepository.persistAndFlush(
-      user.emailVerification,
-    );
+    const verificationToken = generateRandomString(32);
+
+    emailVerification.verificationToken = generateSha(verificationToken);
+    emailVerification.lastSent = new Date();
+    await this.emailVerificationRepository.persistAndFlush(emailVerification);
 
     try {
       await this.mailService.sendMail({
@@ -147,8 +147,25 @@ export class AuthService {
         subject: 'Email verification',
         text: `Please verify your email by clicking on the following link: ${this.configService.get(
           'app.frontendBaseUrl',
-        )}/auth/verify-email/${user.id}`,
+        )}/auth/verify-email/${verificationToken}`,
       });
     } catch (e) {}
+  }
+
+  async verifyEmail(verificationToken: string): Promise<User> {
+    const emailVerification = await this.emailVerificationRepository.findOne({
+      verificationToken: generateSha(verificationToken),
+      verifiedAt: null,
+    });
+
+    if (!emailVerification) {
+      throw new InvalidTokenException();
+    }
+
+    emailVerification.verificationToken = null;
+    emailVerification.verifiedAt = new Date();
+    await this.emailVerificationRepository.persistAndFlush(emailVerification);
+
+    return emailVerification.user;
   }
 }

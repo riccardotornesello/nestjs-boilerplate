@@ -10,9 +10,9 @@ export class EmailVerification {
   @Property({ type: types.datetime, nullable: true })
   verifiedAt?: Date;
 
-  @Property({
-    type: types.datetime,
-    nullable: true,
-  })
+  @Property({ type: types.string, nullable: true, unique: true })
+  verificationToken?: string;
+
+  @Property({ type: types.datetime, nullable: true })
   lastSent?: Date;
 }

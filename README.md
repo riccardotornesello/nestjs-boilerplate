@@ -188,7 +188,6 @@ TODO: section missing
 - Tests
 - CORS
 - CSRF
-- Rate limit
 - Queue (Bull) with periodic tasks
 - Compression
 - Simple file upload

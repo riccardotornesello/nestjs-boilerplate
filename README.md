@@ -193,7 +193,6 @@ TODO: section missing
 - CORS
 - CSRF
 - Queue (Bull) with periodic tasks
-- Compression
 - Simple file upload
 - File upload to MinIO/S3
 - Microservices

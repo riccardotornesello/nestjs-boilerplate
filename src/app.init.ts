@@ -12,6 +12,7 @@ import { useContainer } from 'class-validator';
 import helmet from 'helmet';
 
 import { AppModule } from './app.module';
+import { configuration } from './config';
 import {
   AllExceptionsFilter,
   HttpExceptionFilter,
@@ -23,7 +24,11 @@ export function initApp(app: INestApplication) {
 
   const httpAdapter = app.get(HttpAdapterHost);
 
+  // Security
   app.use(helmet());
+  app.enableCors({
+    origin: configuration().security.corsHosts,
+  });
 
   app.useGlobalPipes(
     new ValidationPipe({

@@ -163,6 +163,12 @@ TODO: section missing
 
 TODO: section missing
 
+### Security
+
+TODO: helmet
+
+TODO: cors
+
 ## Modules
 
 ### From NestJS
@@ -190,8 +196,6 @@ TODO: section missing
 - Docker (with multi-stage build in production)
 - Websockets
 - Tests
-- CORS
-- CSRF
 - Queue (Bull) with periodic tasks
 - Simple file upload
 - File upload to MinIO/S3

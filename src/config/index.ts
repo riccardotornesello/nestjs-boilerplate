@@ -1,3 +1,7 @@
+import * as dotenv from 'dotenv';
+
+dotenv.config();
+
 export interface PostgresConfig {
   host: string;
   port: number;
@@ -31,12 +35,17 @@ export interface AppConfig {
   frontendBaseUrl: string;
 }
 
+export interface SecurityConfig {
+  corsHosts: string[];
+}
+
 export interface Config {
   postgres: PostgresConfig;
   auth: AuthConfig;
   redis: RedisConfig;
   mail: MailConfig;
   app: AppConfig;
+  security: SecurityConfig;
 }
 
 export const configuration = (): Config => ({
@@ -68,5 +77,10 @@ export const configuration = (): Config => ({
   },
   app: {
     frontendBaseUrl: process.env.FRONTEND_BASE_URL || 'http://localhost:3000',
+  },
+  security: {
+    corsHosts: process.env.CORS_HOSTS
+      ? process.env.CORS_HOSTS.split(',')
+      : ['http://localhost:3001'],
   },
 });

@@ -1,5 +1,10 @@
 # NestJS Boilerplate
 
+> **⚠️ Warning**
+> 
+> This repo is archived and will no longer be updated.
+> A new simpler but complete version is in development at [this url: https://github.com/riccardotornesello/nestjs-boilerplate](https://github.com/riccardotornesello/nestjs-boilerplate)
+
 ## Nice features
 
 ### Api Versioning
